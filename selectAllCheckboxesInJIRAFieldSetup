@@ -1,0 +1,1 @@
+AJS.$('input[type=checkbox]').click()
