@@ -1,0 +1,11 @@
+AJS.$.getJSON('/rest/api/2/search?&maxResults=1000&fields=reporter', function(data) {
+    var umap = {};
+    AJS.$(data.issues).each( function(i,e){
+      var u = e.fields.reporter;
+      umap[u.name] = u;
+    });    
+    for(var name in umap) {
+      var user = umap[name];
+      console.log(user.name +","+user.displayName+","+user.emailAddress);
+    }
+});
