@@ -1,3 +1,5 @@
+rem Run this from the directory where you've extracted the sources
+rem Sample: buildsrc core 6.2.1
 set cname=%1
 set jiraversion=%2
 set cdir=%CD%
