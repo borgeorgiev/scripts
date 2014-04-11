@@ -1,0 +1,7 @@
+set cname=%1
+set jiraversion=%2
+set cdir=%CD%
+cd %cdir%\atlassian-jira-%jiraversion%-source\jira-project\jira-components\jira-%cname%\
+call C:\Users\boris\atlassian-plugin-sdk\apache-maven\bin\mvn.bat source:jar
+copy target\jira-%cname%-%jiraversion%-sources.jar %M2_REPO%\com\atlassian\jira\jira-%cname%\%jiraversion%\
+cd %cdir%
