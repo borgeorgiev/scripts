@@ -13,8 +13,8 @@ def eventTypeManager = ComponentAccessor.getComponent(EventTypeManager.class);
 
 //
 def schemeName = "OPS Notification Scheme"
-def scheme = manager.getSchemeObject(schemeName)
-def type = "Group"
+def scheme = manager.getScheme(schemeName)
+def type = "Group_Dropdown"
 def groupName = "administrators"
 def rawValue = typeManager.getNotificationType(type).getArgumentValue(groupName);
 def eventTypeId = EventType.ISSUE_CREATED_ID
