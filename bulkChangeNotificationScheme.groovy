@@ -15,11 +15,19 @@ def eventTypeManager = ComponentAccessor.getComponent(EventTypeManager.class);
 def schemeName = "OPS Notification Scheme"
 def scheme = manager.getScheme(schemeName)
 def type = "Group_Dropdown"
-def groupName = "administrators"
-def rawValue = typeManager.getNotificationType(type).getArgumentValue(groupName);
-def eventTypeId = EventType.ISSUE_CREATED_ID
-SchemeEntity schemeEntity = new SchemeEntity(type, rawValue, eventTypeId, null);
-if (!manager.hasEntities(scheme, eventTypeId, type, rawValue, null))
-{
-    manager.createSchemeEntity(scheme, schemeEntity);
-}
+def groups = ["administrators", "users"]
+def eventTypeIds = [EventType.ISSUE_CREATED_ID, EventType.ISSUE_UPDATED_ID]
+
+//For each event add each group
+eventTypeIds.each() {eventTypeId -> 
+    groups.each() {groupName ->
+        //Add entry for each group
+    	def rawValue = typeManager.getNotificationType(type).getArgumentValue(groupName);    
+        SchemeEntity schemeEntity = new SchemeEntity(type, rawValue, eventTypeId, null);
+        if (!manager.hasEntities(scheme, eventTypeId, type, rawValue, null))
+        {
+            manager.createSchemeEntity(scheme, schemeEntity);
+        }
+    }    
+};
+
