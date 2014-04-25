@@ -12,18 +12,29 @@
 
 
 function attachNotificationsButton() {
-    $('#askaquestion').parent().append('<li><a id="enableNotifications" class="aui-button aui-button-primary aui-style" href="/questions/ask/" id="enableNotifications">Enable Notifications</a></li');
-    $('#enableNotifications').click(function(){
-        if (window.webkitNotifications.checkPermission() != 0) {
-            window.webkitNotifications.requestPermission()
-        }
-    });
+    if (window.webkitNotifications.checkPermission() == 0) {
+        $('#askaquestion').parent().append('<li><a id="enableNotifications" class="aui-button aui-button-primary aui-style" href="/questions/ask/" id="enableNotifications">Enable Notifications</a></li');
+            $('#enableNotifications').click(function(){
+            if (window.webkitNotifications.checkPermission() != 0) {
+                window.webkitNotifications.requestPermission()
+            }
+        });
+    }
 }
 
 function getCurrentQuestions() {
     var result = new Array();
     $('.questionrow>h2>a').each(function(i,e){result.push($(e).attr('href'))});   
     return result;
+}
+
+function initReload(timeoutInterval) {    
+    function a_reload(){
+        window.clearInterval(reloadInterval);
+        location.reload();
+	}
+	reloadInterval = window.setInterval(a_reload, timeoutInterval);
+    console.log('Notifications script successfully loaded. Will reload the page in '+ timeoutInterval+' milliseconds');
 }
 
 // Start
@@ -48,15 +59,13 @@ if(last) {
         if (window.webkitNotifications.checkPermission() == 0) { // 0 is PERMISSION_ALLOWED
             // function defined in step 2
             window.webkitNotifications.createNotification("https://developer.atlassian.com/download/thumbnails/23691302/answers.png?version=2&modificationDate=1380151380681&api=v2",
-                                                          "New Questions Posted", newQuestions.length+ "new questions were posted since last check.").show();
+                                                          "New Questions Posted", newQuestions.length+ " new questions were posted since last check.").show();
         }
+        initReload(120000);
+    } else {
+    	initReload(20000);    
     }
+    
+} else {
+    initReload(20000);
 }
-
-
-function a_reload(){
-    window.clearInterval(reloadInterval);
-    location.reload();
-}
-reloadInterval = window.setInterval(a_reload,20000);
-
