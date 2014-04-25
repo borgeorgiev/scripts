@@ -12,7 +12,7 @@
 
 
 function attachNotificationsButton() {
-    if (window.webkitNotifications.checkPermission() == 0) {
+    if (window.webkitNotifications.checkPermission() != 0) {
         $('#askaquestion').parent().append('<li><a id="enableNotifications" class="aui-button aui-button-primary aui-style" href="/questions/ask/" id="enableNotifications">Enable Notifications</a></li');
             $('#enableNotifications').click(function(){
             if (window.webkitNotifications.checkPermission() != 0) {
